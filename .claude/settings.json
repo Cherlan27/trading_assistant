@@ -2,7 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(openspec instructions *)",
-      "Bash(openspec status *)"
+      "Bash(openspec status *)",
+      "Bash(openspec list *)",
+      "Bash(poetry install *)",
+      "Bash(TWELVE_DATA_API_KEY=test-key poetry run uvicorn app.main:app --host 127.0.0.1 --port 8000)",
+      "Bash(curl -s http://127.0.0.1:8000/docs)",
+      "Bash(curl -s http://127.0.0.1:8000/openapi.json)",
+      "Bash(kill %1)",
+      "Bash(poetry run *)",
+      "Bash(curl -s http://localhost:8123/health)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8123/docs)"
     ]
   }
 }
