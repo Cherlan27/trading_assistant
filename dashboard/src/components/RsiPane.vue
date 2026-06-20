@@ -3,6 +3,7 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { createChart, LineSeries } from 'lightweight-charts'
 import type { IChartApi, ISeriesApi, Time } from 'lightweight-charts'
 import type { IndicatorDataPoint } from '@/composables/useApi'
+import { toTime } from '@/constants'
 
 const props = defineProps<{
   data: IndicatorDataPoint[] | null
@@ -57,7 +58,7 @@ onBeforeUnmount(() => {
 function updateData() {
   if (!rsiSeries || !props.data) return
   rsiSeries.setData(props.data.map(d => ({
-    time: d.date.slice(0, 10) as unknown as Time,
+    time: toTime(d.date),
     value: d.value,
   })))
   chart?.timeScale().fitContent()

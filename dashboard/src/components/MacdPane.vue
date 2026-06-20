@@ -3,6 +3,7 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { createChart, LineSeries, HistogramSeries } from 'lightweight-charts'
 import type { IChartApi, ISeriesApi, Time } from 'lightweight-charts'
 import type { MACDDataPoint } from '@/composables/useApi'
+import { toTime } from '@/constants'
 
 const props = defineProps<{
   data: MACDDataPoint[] | null
@@ -64,20 +65,18 @@ onBeforeUnmount(() => {
 function updateData() {
   if (!macdLineSeries || !signalSeries || !histogramSeries || !props.data) return
 
-  const toT = (d: string) => d.slice(0, 10) as unknown as Time
-
   macdLineSeries.setData(props.data.map(d => ({
-    time: toT(d.date),
+    time: toTime(d.date),
     value: d.macd,
   })))
 
   signalSeries.setData(props.data.map(d => ({
-    time: toT(d.date),
+    time: toTime(d.date),
     value: d.signal,
   })))
 
   histogramSeries.setData(props.data.map(d => ({
-    time: toT(d.date),
+    time: toTime(d.date),
     value: d.histogram,
     color: d.histogram >= 0 ? 'rgba(38, 166, 154, 0.7)' : 'rgba(239, 83, 80, 0.7)',
   })))
