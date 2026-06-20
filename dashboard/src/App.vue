@@ -82,6 +82,7 @@ function onCrosshairMove(data: any) {
         :overlay-symbols="overlaySymbols"
         :indicators="primaryIndicators"
         :active-indicators="state.activeIndicators.value"
+        :interval="state.interval.value"
         @crosshair-move="onCrosshairMove"
         @visible-range-change="(r: any) => visibleRange = r"
       />

@@ -8,7 +8,7 @@ import {
 } from 'lightweight-charts'
 import type { IChartApi, ISeriesApi, Time, MouseEventParams } from 'lightweight-charts'
 import type { OHLCVDataPoint, IndicatorData, IndicatorDataPoint, BollingerDataPoint } from '@/composables/useApi'
-import { OVERLAY_COLORS, INDICATOR_COLORS, toTime } from '@/constants'
+import { OVERLAY_COLORS, INDICATOR_COLORS, toTime, isIntraday } from '@/constants'
 
 const props = defineProps<{
   primarySymbol: string
@@ -16,6 +16,7 @@ const props = defineProps<{
   overlaySymbols: { symbol: string; data: OHLCVDataPoint[] }[]
   indicators: Record<string, IndicatorData>
   activeIndicators: string[]
+  interval: string
 }>()
 
 const emit = defineEmits<{
@@ -240,6 +241,10 @@ watch(() => props.primaryData, () => {
   updatePrimaryData()
   chart?.timeScale().fitContent()
 })
+
+watch(() => props.interval, (interval) => {
+  chart?.timeScale().applyOptions({ timeVisible: isIntraday(interval) })
+}, { immediate: true })
 
 watch(() => props.overlaySymbols, updateOverlays, { deep: true })
 watch(() => [props.indicators, props.activeIndicators], updateIndicators, { deep: true })

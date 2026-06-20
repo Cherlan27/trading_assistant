@@ -22,6 +22,12 @@ export function getValidIntervals(period: string): string[] {
   return PERIOD_INTERVAL_MAP[period] ?? ['1d', '1wk', '1mo']
 }
 
+const INTRADAY_INTERVALS = new Set(['1m', '5m', '15m', '30m', '1h'])
+
+export function isIntraday(interval: string): boolean {
+  return INTRADAY_INTERVALS.has(interval)
+}
+
 export const OVERLAY_COLORS = ['#2962FF', '#FF6D00', '#AB47BC', '#26A69A', '#D50000']
 
 export const INDICATOR_COLORS: Record<string, string> = {
