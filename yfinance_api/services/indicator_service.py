@@ -39,7 +39,7 @@ class IndicatorService:
                 continue
             results.append(
                 MACDDataPoint(
-                    date=str(df.index[i].date()),
+                    date=df.index[i].isoformat(),
                     macd=round(macd_line.iloc[i], 6),
                     signal=round(signal_line.iloc[i], 6),
                     histogram=round(histogram.iloc[i], 6),
@@ -59,7 +59,7 @@ class IndicatorService:
                 continue
             results.append(
                 BollingerDataPoint(
-                    date=str(df.index[i].date()),
+                    date=df.index[i].isoformat(),
                     upper=round(upper.iloc[i], 6),
                     middle=round(sma.iloc[i], 6),
                     lower=round(lower.iloc[i], 6),
@@ -74,7 +74,7 @@ class IndicatorService:
                 continue
             results.append(
                 IndicatorDataPoint(
-                    date=str(df.index[i].date()),
+                    date=df.index[i].isoformat(),
                     value=round(series.iloc[i], 6),
                 )
             )
