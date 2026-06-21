@@ -8,7 +8,7 @@ Defines the candlestick price chart rendering, volume sub-pane, crosshair data d
 
 ### Requirement: Candlestick price chart
 
-The dashboard SHALL render OHLCV data as a candlestick chart using TradingView Lightweight Charts. Each candle SHALL represent one data point from the `/history/{symbol}` endpoint. Green candles SHALL indicate close >= open, red candles SHALL indicate close < open. The chart SHALL use Unix epoch seconds (UTCTimestamp) as the time format to support both daily and intraday time precision. The chart SHALL dynamically toggle time visibility on the x-axis based on the active interval: `timeVisible` SHALL be `true` for intraday intervals (1m, 5m, 15m, 30m, 1h) and `false` for daily or longer intervals (1d, 1wk, 1mo).
+The dashboard SHALL render OHLCV data as a candlestick chart using TradingView Lightweight Charts. Each candle SHALL represent one data point from the `/history/{symbol}` endpoint. Green candles SHALL indicate close >= open, red candles SHALL indicate close < open. The chart SHALL use Unix epoch seconds (UTCTimestamp) as the time format to support both daily and intraday time precision. The chart SHALL dynamically toggle time visibility on the x-axis based on the active interval: `timeVisible` SHALL be `true` for intraday intervals (1m, 5m, 15m, 30m, 1h) and `false` for daily or longer intervals (1d, 1wk, 1mo). The right-side price scale SHALL display prices using a custom formatter with Euro currency formatting and German locale (e.g., `1.234,56 €`).
 
 #### Scenario: Candlestick chart renders
 
@@ -40,6 +40,11 @@ The dashboard SHALL render OHLCV data as a candlestick chart using TradingView L
 - **WHEN** a user switches from interval "5m" to interval "1d"
 - **THEN** the x-axis updates to show dates only, hiding hours and minutes
 
+#### Scenario: Y-axis displays Euro-formatted prices
+
+- **WHEN** a symbol is loaded and the candlestick chart renders
+- **THEN** the right-side price scale labels show prices formatted with the Euro symbol and German locale (e.g., `1.234,56 €`)
+
 ### Requirement: Volume sub-pane
 
 The dashboard SHALL render a volume bar chart in a pane below the candlestick chart, sharing the same time axis. Volume bars SHALL be color-coded to match their corresponding candlestick (green for up, red for down).
@@ -51,12 +56,12 @@ The dashboard SHALL render a volume bar chart in a pane below the candlestick ch
 
 ### Requirement: Crosshair with data display
 
-The chart SHALL display a crosshair that follows the cursor. When the crosshair hovers over a data point, the legend area SHALL display the OHLCV values and any active indicator values for that point in time.
+The chart SHALL display a crosshair that follows the cursor. When the crosshair hovers over a data point, the legend area SHALL display the OHLCV values formatted with Euro currency and any active indicator values for that point in time.
 
 #### Scenario: Hover shows data
 
 - **WHEN** a user moves the cursor over a candlestick
-- **THEN** the legend displays the date, open, high, low, close, and volume values for that data point
+- **THEN** the legend displays the date, open, high, low, close values in Euro format, and volume for that data point
 
 ### Requirement: Color-coded legend
 
