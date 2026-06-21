@@ -1,10 +1,4 @@
-# Candlestick Chart
-
-## Purpose
-
-Defines the candlestick price chart rendering, volume sub-pane, crosshair data display, and color-coded legend for the trading dashboard.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Candlestick price chart
 
@@ -45,15 +39,6 @@ The dashboard SHALL render OHLCV data as a candlestick chart using TradingView L
 - **WHEN** a symbol is loaded and the candlestick chart renders
 - **THEN** the right-side price scale labels show prices formatted with the Euro symbol and German locale (e.g., `1.234,56 €`)
 
-### Requirement: Volume sub-pane
-
-The dashboard SHALL render a volume bar chart in a pane below the candlestick chart, sharing the same time axis. Volume bars SHALL be color-coded to match their corresponding candlestick (green for up, red for down).
-
-#### Scenario: Volume bars display
-
-- **WHEN** candlestick data is rendered
-- **THEN** volume bars appear below the price chart aligned to the same time axis
-
 ### Requirement: Crosshair with data display
 
 The chart SHALL display a crosshair that follows the cursor. When the crosshair hovers over a data point, the legend area SHALL display the OHLCV values formatted with Euro currency and any active indicator values for that point in time.
@@ -62,12 +47,3 @@ The chart SHALL display a crosshair that follows the cursor. When the crosshair 
 
 - **WHEN** a user moves the cursor over a candlestick
 - **THEN** the legend displays the date, open, high, low, close values in Euro format, and volume for that data point
-
-### Requirement: Color-coded legend
-
-The dashboard SHALL display a legend mapping each symbol and indicator to its line color. The legend SHALL update dynamically as symbols and indicators are added or removed.
-
-#### Scenario: Legend shows active series
-
-- **WHEN** two symbols (AAPL, MSFT) and SMA(20) are active
-- **THEN** the legend displays three entries with distinct colors: AAPL, MSFT, and SMA(20)

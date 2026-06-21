@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CrosshairInfo } from '@/composables/useChartState'
+import { formatPrice } from '@/constants'
 
 defineProps<{
   primarySymbol: string
@@ -37,10 +38,10 @@ function formatVolume(v: number): string {
       <span class="color-dot" style="background: #26a69a"></span>
       <span class="legend-label">{{ primarySymbol }}</span>
       <span v-if="crosshairData?.ohlcv" class="legend-values">
-        O: {{ formatNum(crosshairData.ohlcv.open) }}
-        H: {{ formatNum(crosshairData.ohlcv.high) }}
-        L: {{ formatNum(crosshairData.ohlcv.low) }}
-        C: {{ formatNum(crosshairData.ohlcv.close) }}
+        O: {{ formatPrice(crosshairData.ohlcv.open) }}
+        H: {{ formatPrice(crosshairData.ohlcv.high) }}
+        L: {{ formatPrice(crosshairData.ohlcv.low) }}
+        C: {{ formatPrice(crosshairData.ohlcv.close) }}
         V: {{ formatVolume(crosshairData.ohlcv.volume) }}
       </span>
     </div>

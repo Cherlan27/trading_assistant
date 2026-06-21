@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { getValidIntervals } from '@/constants'
 
 const props = defineProps<{
   symbols: string[]
@@ -19,7 +20,14 @@ const emit = defineEmits<{
 const symbolInput = ref('')
 
 const periods = ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', 'max']
-const intervals = ['1d', '1wk', '1mo']
+
+const filteredIntervals = computed(() => getValidIntervals(props.period))
+
+watch(filteredIntervals, (valid) => {
+  if (!valid.includes(props.interval)) {
+    emit('update:interval', valid[0])
+  }
+})
 
 const indicatorOptions = [
   { id: 'sma_20', label: 'SMA(20)' },
@@ -79,7 +87,7 @@ function toggleIndicator(id: string) {
       <label>
         Interval
         <select :value="interval" @change="emit('update:interval', ($event.target as HTMLSelectElement).value)">
-          <option v-for="i in intervals" :key="i" :value="i">{{ i }}</option>
+          <option v-for="i in filteredIntervals" :key="i" :value="i">{{ i }}</option>
         </select>
       </label>
     </div>

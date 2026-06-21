@@ -31,12 +31,17 @@ The Vite dev server SHALL proxy API requests to the FastAPI backend at `http://l
 
 ### Requirement: Dashboard layout with controls and chart area
 
-The application SHALL render a single-page layout with three zones: a top bar containing controls (symbol input, period/interval selectors, indicator toggles), a main area for the chart, and a bottom legend area.
+The application SHALL render a single-page layout with three zones: a top bar containing controls (symbol input, period/interval selectors, indicator toggles), a main area for the chart, and a bottom legend area. All price values displayed in the legend SHALL use Euro currency formatting with German locale.
 
 #### Scenario: Initial page load
 
 - **WHEN** a user opens the dashboard in a browser
 - **THEN** the page displays the control bar, an empty chart area, and the legend section
+
+#### Scenario: Legend shows Euro-formatted prices
+
+- **WHEN** a user hovers over chart data
+- **THEN** the legend area displays OHLC values with Euro currency formatting (e.g., `1.234,56 €`)
 
 ### Requirement: Symbol input with chip management
 
@@ -63,12 +68,27 @@ The controls SHALL include a dropdown for selecting the data period. Valid value
 
 ### Requirement: Interval selector
 
-The controls SHALL include a dropdown for selecting the data interval. Valid values SHALL be: `1d`, `1wk`, `1mo`. The default SHALL be `1d`. The available intervals SHALL be filtered based on the selected period to prevent invalid combinations.
+The controls SHALL include a dropdown for selecting the data interval. Valid values SHALL be: `1m`, `5m`, `15m`, `30m`, `1h`, `1d`, `1wk`, `1mo`. The default SHALL be `1d`. The available intervals SHALL be filtered based on the selected period to prevent invalid combinations using a static compatibility map.
 
 #### Scenario: Change interval
 
 - **WHEN** a user selects "1wk" from the interval dropdown
 - **THEN** the chart re-fetches and displays weekly data for all loaded symbols
+
+#### Scenario: Intraday interval selected
+
+- **WHEN** a user selects period "1d" and interval "5m"
+- **THEN** the chart re-fetches and displays 5-minute candles for the current day for all loaded symbols
+
+#### Scenario: Invalid interval filtered out
+
+- **WHEN** a user selects period "1y"
+- **THEN** the interval dropdown SHALL only show `1d`, `1wk`, `1mo` and SHALL NOT show intraday intervals
+
+#### Scenario: Interval auto-adjusted on period change
+
+- **WHEN** a user has interval "5m" selected and changes period from "1d" to "1y"
+- **THEN** the interval SHALL auto-adjust to the first valid interval for the new period (e.g., `1d`)
 
 ### Requirement: Indicator toggles
 
