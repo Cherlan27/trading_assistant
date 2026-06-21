@@ -8,7 +8,7 @@ import {
 } from 'lightweight-charts'
 import type { IChartApi, ISeriesApi, Time, MouseEventParams } from 'lightweight-charts'
 import type { OHLCVDataPoint, IndicatorData, IndicatorDataPoint, BollingerDataPoint } from '@/composables/useApi'
-import { OVERLAY_COLORS, INDICATOR_COLORS, toTime, isIntraday } from '@/constants'
+import { OVERLAY_COLORS, INDICATOR_COLORS, toTime, isIntraday, formatPrice } from '@/constants'
 
 const props = defineProps<{
   primarySymbol: string
@@ -55,6 +55,10 @@ function initChart() {
     borderVisible: false,
     wickUpColor: '#26a69a',
     wickDownColor: '#ef5350',
+    priceFormat: {
+      type: 'custom',
+      formatter: (price: number) => formatPrice(price),
+    },
   })
 
   volumeSeries = chart.addSeries(HistogramSeries, {

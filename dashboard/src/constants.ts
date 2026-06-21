@@ -28,6 +28,17 @@ export function isIntraday(interval: string): boolean {
   return INTRADAY_INTERVALS.has(interval)
 }
 
+const eurFormatter = new Intl.NumberFormat('de-DE', {
+  style: 'currency',
+  currency: 'EUR',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+})
+
+export function formatPrice(value: number): string {
+  return eurFormatter.format(value)
+}
+
 export const OVERLAY_COLORS = ['#2962FF', '#FF6D00', '#AB47BC', '#26A69A', '#D50000']
 
 export const INDICATOR_COLORS: Record<string, string> = {
